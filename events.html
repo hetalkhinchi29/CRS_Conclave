@@ -14,8 +14,34 @@
         body {
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
-            background: linear-gradient(135deg, #2d1b69 0%, #11052c 100%);
+            background: #0a0015;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 58, 237, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 212, 170, 0.3) 0%, transparent 50%);
             min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated floating elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="1" fill="rgba(0,212,170,0.3)"/><circle cx="60" cy="30" r="1.5" fill="rgba(168,85,247,0.2)"/></svg>');
+            background-size: 200px 200px;
+            animation: float-particles 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float-particles {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-200px) rotate(360deg); }
         }
 
         /* Navigation Styles (same as other pages) */
@@ -23,18 +49,18 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(45, 27, 105, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 0, 21, 0.95);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             padding: 15px 0;
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
 
         .navbar.scrolled {
-            background: rgba(45, 27, 105, 0.98);
+            background: rgba(10, 0, 21, 0.98);
             padding: 10px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1);
         }
 
         .nav-container {
@@ -125,29 +151,7 @@
             min-height: 100vh;
             color: white;
             position: relative;
-        }
-
-        /* Animated background */
-        .schedule::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                            radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                            radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                            radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: sparkle 20s linear infinite;
-            opacity: 0.3;
-        }
-
-        @keyframes sparkle {
-            from { transform: translateX(0); }
-            to { transform: translateX(200px); }
+            z-index: 2;
         }
 
         .container {
@@ -155,25 +159,145 @@
             margin: 0 auto;
             padding: 0 40px;
             position: relative;
-            z-index: 2;
+        }
+
+        /* Hero section with stats */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
         }
 
         .section-title {
             font-size: 64px;
             font-weight: bold;
-            text-align: center;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #00d4aa, #a855f7);
+            background: linear-gradient(135deg, #00d4aa, #a855f7, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .section-subtitle {
             font-size: 24px;
-            text-align: center;
             opacity: 0.8;
             margin-bottom: 60px;
+            font-style: italic;
+        }
+
+        /* Stats cards inspired by the screenshot */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            transform: translateY(10px);
+            animation: float-up 0.8s ease-out forwards;
+        }
+
+        /* Image card styles */
+        .image-card {
+            padding: 0;
+            height: 250px;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform 0.4s ease;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 170, 0.8), rgba(168, 85, 247, 0.8));
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .image-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .image-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.4s; }
+        .stat-card:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes float-up {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
+            border-color: rgba(0, 212, 170, 0.4);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00d4aa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            opacity: 0.8;
             font-style: italic;
         }
 
@@ -186,9 +310,9 @@
         }
 
         .schedule-tab {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(168, 85, 247, 0.3);
             border-radius: 50px;
             padding: 15px 40px;
             color: white;
@@ -197,17 +321,39 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(135deg, #00d4aa, #a855f7);
+            transition: width 0.3s ease;
+            z-index: -1;
         }
 
         .schedule-tab:hover {
-            background: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .schedule-tab:hover::before {
+            width: 100%;
         }
 
         .schedule-tab.active {
-            background: linear-gradient(135deg, #00d4aa, #00a085);
+            background: linear-gradient(135deg, #00d4aa, #a855f7);
             border-color: #00d4aa;
-            box-shadow: 0 5px 20px rgba(0, 212, 170, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.4);
+        }
+
+        .schedule-tab.active::before {
+            width: 100%;
         }
 
         /* Schedule Day Content */
@@ -229,7 +375,7 @@
             font-size: 36px;
             text-align: center;
             margin-bottom: 50px;
-            background: linear-gradient(135deg, #00d4aa, #ffffff);
+            background: linear-gradient(135deg, #ffffff, #00d4aa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -242,12 +388,12 @@
         }
 
         .schedule-session {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
@@ -262,10 +408,33 @@
             background: linear-gradient(135deg, #00d4aa, #a855f7);
         }
 
+        .schedule-session::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(168, 85, 247, 0.1), transparent);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .schedule-session:hover::after {
+            opacity: 1;
+        }
+
         .schedule-session:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 212, 170, 0.1);
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 212, 170, 0.2);
+            border-color: rgba(0, 212, 170, 0.4);
         }
 
         .session-header {
@@ -275,16 +444,19 @@
             margin-bottom: 15px;
             flex-wrap: wrap;
             gap: 10px;
+            position: relative;
+            z-index: 2;
         }
 
         .schedule-time {
             font-size: 18px;
             font-weight: bold;
             color: #00d4aa;
-            background: rgba(0, 212, 170, 0.1);
+            background: rgba(0, 212, 170, 0.15);
             padding: 8px 16px;
             border-radius: 25px;
             border: 1px solid rgba(0, 212, 170, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .session-type {
@@ -296,6 +468,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
         }
 
         .session-title {
@@ -303,6 +476,8 @@
             font-weight: bold;
             margin-bottom: 10px;
             color: white;
+            position: relative;
+            z-index: 2;
         }
 
         .session-speaker {
@@ -310,6 +485,8 @@
             color: #00d4aa;
             margin-bottom: 10px;
             font-weight: 600;
+            position: relative;
+            z-index: 2;
         }
 
         .session-description {
@@ -317,6 +494,8 @@
             line-height: 1.6;
             opacity: 0.9;
             color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 2;
         }
 
         /* Event Highlights */
@@ -333,30 +512,51 @@
         }
 
         .highlight-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 40px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.4s ease;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .highlight-card:hover::before {
+            opacity: 1;
         }
 
         .highlight-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 212, 170, 0.2);
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 212, 170, 0.3);
+            border-color: rgba(0, 212, 170, 0.4);
         }
 
         .highlight-icon {
             font-size: 48px;
             margin-bottom: 20px;
             animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
 
         .highlight-title {
@@ -367,12 +567,66 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+            z-index: 2;
         }
 
         .highlight-desc {
             font-size: 16px;
             opacity: 0.9;
             line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Floating decoration elements */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: float-random 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 212, 170, 0.3);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            background: rgba(168, 85, 247, 0.4);
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            top: 40%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float-random {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            33% { transform: translateY(-20px) translateX(10px); }
+            66% { transform: translateY(10px) translateX(-15px); }
         }
 
         /* Responsive Design */
@@ -387,8 +641,8 @@
                 right: -100%;
                 width: 100%;
                 height: calc(100vh - 80px);
-                background: rgba(45, 27, 105, 0.98);
-                backdrop-filter: blur(10px);
+                background: rgba(10, 0, 21, 0.98);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
@@ -408,6 +662,15 @@
 
             .section-title {
                 font-size: 48px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 36px;
             }
 
             .schedule-tabs {
@@ -447,10 +710,21 @@
             .highlights-grid {
                 grid-template-columns: 1fr;
             }
+
+            .stat-card {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Floating decorative shapes -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -485,8 +759,42 @@
     <!-- Schedule Section -->
     <section class="schedule" id="schedule">
         <div class="container">
-            <h2 class="section-title">Event Schedule</h2>
-            <p class="section-subtitle">Two days packed with insights, workshops, and networking opportunities</p>
+            <div class="hero-section">
+                <h2 class="section-title">Event Schedule</h2>
+                <p class="section-subtitle">Two days packed with insights, workshops, and networking opportunities</p>
+                
+                <!-- Event showcase with images -->
+                <div class="stats-grid">
+                    <div class="stat-card image-card">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=300&fit=crop" alt="Business Conference" class="card-image">
+                        <div class="card-overlay">
+                            <div class="stat-number">200+</div>
+                            <div class="stat-label">participants</div>
+                        </div>
+                    </div>
+                    <div class="stat-card image-card">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop" alt="Workshop Session" class="card-image">
+                        <div class="card-overlay">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">sessions</div>
+                        </div>
+                    </div>
+                    <div class="stat-card image-card">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=300&fit=crop" alt="AI Technology" class="card-image">
+                        <div class="card-overlay">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">competitions</div>
+                        </div>
+                    </div>
+                    <div class="stat-card image-card">
+                        <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=400&h=300&fit=crop" alt="Innovation Hub" class="card-image">
+                        <div class="card-overlay">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">days of innovation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <!-- Day Tabs -->
             <div class="schedule-tabs">
@@ -637,7 +945,7 @@
 
                     <div class="schedule-session">
                         <div class="session-header">
-                            <div class="schedule-time">08:30 PM - 10:45 AM</div>
+                            <div class="schedule-time">08:30 AM - 10:45 AM</div>
                             <div class="session-type">Stalls</div>
                         </div>
                         <h4 class="session-title">Stalls Presentations</h4>
@@ -672,8 +980,7 @@
                         <h4 class="session-title">Award and Closing Ceremony</h4>
                         <p class="session-description">Wrap up the event with key takeaways, group photo, and final networking opportunity.</p>
                     </div>
-
-                   
+                </div>
             </div>
 
             <!-- Event Highlights -->
@@ -707,7 +1014,7 @@
 
     <script>
         // Schedule tab switching functionality
-        function showDay(dayId, tabElement) {
+        window.showDay = function(dayId, tabElement) {
             // Hide all schedule days
             const allDays = document.querySelectorAll('.schedule-day');
             allDays.forEach(day => day.classList.remove('active'));
@@ -719,7 +1026,7 @@
             // Show selected day and activate tab
             document.getElementById(dayId).classList.add('active');
             tabElement.classList.add('active');
-        }
+        };
 
         // Mobile menu toggle functionality
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -767,6 +1074,36 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Animate stat cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'float-up 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.schedule-session').forEach(session => {
+            session.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            session.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
     </script>
 </body>
 </html>

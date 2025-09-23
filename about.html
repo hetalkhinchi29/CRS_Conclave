@@ -14,27 +14,53 @@
         body {
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
-            background: linear-gradient(135deg, #2d1b69 0%, #11052c 100%);
+            background: #0a0015;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 58, 237, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 212, 170, 0.3) 0%, transparent 50%);
             min-height: 100vh;
+            position: relative;
         }
 
-        /* Navigation Styles (same as main page) */
+        /* Animated floating elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="1" fill="rgba(0,212,170,0.3)"/><circle cx="60" cy="30" r="1.5" fill="rgba(168,85,247,0.2)"/></svg>');
+            background-size: 200px 200px;
+            animation: float-particles 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float-particles {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-200px) rotate(360deg); }
+        }
+
+        /* Navigation Styles */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(45, 27, 105, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 0, 21, 0.95);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             padding: 15px 0;
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
 
         .navbar.scrolled {
-            background: rgba(45, 27, 105, 0.98);
+            background: rgba(10, 0, 21, 0.98);
             padding: 10px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1);
         }
 
         .nav-container {
@@ -125,29 +151,7 @@
             min-height: 100vh;
             color: white;
             position: relative;
-        }
-
-        /* Animated background */
-        .about-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                            radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                            radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                            radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: sparkle 20s linear infinite;
-            opacity: 0.3;
-        }
-
-        @keyframes sparkle {
-            from { transform: translateX(0); }
-            to { transform: translateX(200px); }
+            z-index: 2;
         }
 
         .content-wrapper {
@@ -155,7 +159,6 @@
             margin: 0 auto;
             padding: 0 40px;
             position: relative;
-            z-index: 2;
         }
 
         .page-header {
@@ -168,10 +171,17 @@
             font-size: 64px;
             font-weight: bold;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #00d4aa, #a855f7);
+            background: linear-gradient(135deg, #00d4aa, #a855f7, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .page-subtitle {
@@ -214,62 +224,143 @@
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 40px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            height: 300px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.4s ease;
+            height: 350px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(168, 85, 247, 0.1), transparent);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 2px solid rgba(0, 212, 170, 0.3);
+            position: relative;
+            z-index: 2;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 212, 170, 0.2);
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 212, 170, 0.3);
+            border-color: rgba(0, 212, 170, 0.4);
         }
 
         .feature-icon {
             font-size: 48px;
             margin-bottom: 20px;
             animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #00d4aa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
         }
 
         .stats-section {
             text-align: center;
-            margin: 100px 0;
+            margin: 100px auto;
+            max-width: 800px;
+            padding: 0 20px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             margin-top: 60px;
+            justify-items: center;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 40px 20px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.4s ease;
+            width: 100%;
+            max-width: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+            border-color: rgba(0, 212, 170, 0.4);
         }
 
         .stat-number {
@@ -280,11 +371,15 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+            z-index: 2;
         }
 
         .stat-label {
             font-size: 16px;
             opacity: 0.9;
+            position: relative;
+            z-index: 2;
         }
 
         .vision-mission {
@@ -295,17 +390,37 @@
         }
 
         .vision-card, .mission-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 50px 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-card::before, .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 170, 0.1), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .vision-card:hover::before, .mission-card:hover::before {
+            opacity: 1;
         }
 
         .vision-card:hover, .mission-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 212, 170, 0.2);
+            border-color: rgba(0, 212, 170, 0.4);
         }
 
         .vision-card h3, .mission-card h3 {
@@ -315,12 +430,66 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+            z-index: 2;
         }
 
         .vision-card p, .mission-card p {
             font-size: 18px;
             line-height: 1.7;
             opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Floating decorative elements */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: float-random 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 212, 170, 0.3);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            background: rgba(168, 85, 247, 0.4);
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            top: 40%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float-random {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            33% { transform: translateY(-20px) translateX(10px); }
+            66% { transform: translateY(10px) translateX(-15px); }
         }
 
         /* Responsive Design */
@@ -335,8 +504,8 @@
                 right: -100%;
                 width: 100%;
                 height: calc(100vh - 80px);
-                background: rgba(45, 27, 105, 0.98);
-                backdrop-filter: blur(10px);
+                background: rgba(10, 0, 21, 0.98);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
@@ -368,8 +537,12 @@
             }
 
             .stats-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
                 gap: 20px;
+            }
+
+            .stats-section {
+                max-width: 400px;
             }
         }
 
@@ -386,10 +559,21 @@
                 height: auto;
                 padding: 30px 20px;
             }
+
+            .stats-section {
+                padding: 0 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Floating decorative shapes -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -435,11 +619,12 @@
                 <div class="section-grid">
                     <div class="section-content">
                         <h2>What is CRS Conclave?</h2>
-                        <p>CRS Conclave 2.0 is Gujarat's premier interschool technology and business event, bringing together the brightest young minds from across the region. This two-day extravaganza combines cutting-edge technology workshops, entrepreneurship challenges, and innovative competitions.</p>
-                        <p>Our event serves as a launchpad for students to explore emerging technologies, develop business acumen, and network with industry leaders, creating an ecosystem where innovation thrives.</p>
+                        <p>CRS Conclave 2.0 is Udgam's premier interschool technology and business event, bringing together the brightest young minds from across the region. This two-day extravaganza combines cutting-edge technology workshop, entrepreneurship challenges, and innovative competitions.</p>
+                        <p>Our event serves as a launchpad for students to explore emerging technologies, develop business acumen, and network with the cohort, creating an ecosystem where innovation thrives.</p>
                     </div>
                     <div class="section-image">
                         <div class="feature-card">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=200&fit=crop&crop=center" alt="Innovation Hub">
                             <div class="feature-icon">🚀</div>
                             <h3>Innovation Hub</h3>
                             <p>A platform where creativity meets technology, fostering the next generation of innovators.</p>
@@ -453,20 +638,16 @@
                 <h2 style="font-size: 42px; margin-bottom: 30px; background: linear-gradient(135deg, #00d4aa, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Event Impact</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">500+</div>
+                        <div class="stat-number">100+</div>
                         <div class="stat-label">Participants</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">50+</div>
+                        <div class="stat-number">4+</div>
                         <div class="stat-label">Schools</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">20+</div>
+                        <div class="stat-number">5+</div>
                         <div class="stat-label">Competitions</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">Industry Experts</div>
                     </div>
                 </div>
             </div>
@@ -476,6 +657,7 @@
                 <div class="section-grid">
                     <div class="section-image">
                         <div class="feature-card">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&h=200&fit=crop&crop=center" alt="Learn and Grow">
                             <div class="feature-icon">💡</div>
                             <h3>Learn & Grow</h3>
                             <p>Hands-on workshops, expert sessions, and peer learning opportunities that expand your horizons.</p>
@@ -483,7 +665,7 @@
                     </div>
                     <div class="section-content">
                         <h2>Why Attend CRS Conclave 2.0?</h2>
-                        <p>Experience an unprecedented blend of technology and business education through interactive workshops, startup pitches, coding competitions, and mentorship sessions with industry veterans.</p>
+                        <p>Experience an unprecedented blend of technology and business education through interactive workshops, startup pitches, AI Stalls.</p>
                         <p>Whether you're passionate about AI, blockchain, entrepreneurship, or innovation, CRS Conclave 2.0 offers something transformative for every aspiring tech enthusiast.</p>
                     </div>
                 </div>
@@ -493,11 +675,11 @@
             <div class="vision-mission">
                 <div class="vision-card">
                     <h3>🎯 Our Vision</h3>
-                    <p>To create a premier platform that nurtures young talent, fostering innovation and entrepreneurship among students, while building a strong foundation for Gujarat's tech ecosystem and inspiring the next generation of leaders.</p>
+                    <p>To create a premier platform that nurtures young talent, fostering innovation and entrepreneurship among students, while building a strong foundation for Udgam's tech ecosystem and inspiring the next generation of leaders.</p>
                 </div>
                 <div class="mission-card">
                     <h3>🌟 Our Mission</h3>
-                    <p>To provide students with hands-on experience in emerging technologies, entrepreneurship opportunities, industry networking, and practical skills development through world-class workshops and competitions.</p>
+                    <p>To provide students with hands-on experience in emerging technologies, entrepreneurship opportunities, industry networking, and practical skills development through workshops and competitions.</p>
                 </div>
             </div>
 
@@ -506,8 +688,8 @@
                 <div class="section-grid">
                     <div class="section-content">
                         <h2>What to Expect?</h2>
-                        <p>Two days packed with cutting-edge workshops on AI, blockchain, web development, and mobile app creation. Participate in startup pitch competitions, hackathons, and technical challenges designed to push your limits.</p>
-                        <p>Network with like-minded peers, learn from industry experts, and gain exposure to real-world business scenarios that will shape your future career path.</p>
+                        <p>Two days packed with cutting-edge workshops on AI and Business Administration. Participate in startup pitch competitions, hackathons, and technical challenges designed to push your limits.</p>
+                        <p>Network with like-minded peers, learn from AI Projects, and gain exposure to real-world business scenarios that will shape your future career path.</p>
                     </div>
                     <div class="section-image">
                         <div class="feature-card">
@@ -568,6 +750,37 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Enhanced interactions
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        document.querySelectorAll('.vision-card, .mission-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
     </script>
 </body>
 </html>
