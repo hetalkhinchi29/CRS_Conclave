@@ -348,6 +348,9 @@
         border: 2px solid rgba(168, 85, 247, 0.2);
         transition: all 0.4s ease;
         background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .youtube-container:hover {
@@ -359,25 +362,24 @@
       .event-video {
         width: 100%;
         height: 100%;
-        border-radius: 20px;
         display: block;
         object-fit: cover;
+        object-position: center;
         background: #000;
-        /* Hardware acceleration for better performance */
+        /* Remove border-radius from video itself */
+        border-radius: 0;
+        /* Hardware acceleration */
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
-        /* Better rendering quality */
-        image-rendering: -webkit-optimize-contrast;
-        image-rendering: crisp-edges;
-        /* Smooth rendering */
+        /* High quality rendering */
+        image-rendering: auto;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        -webkit-font-smoothing: antialiased;
+        /* Smooth text rendering */
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
         /* GPU acceleration */
         will-change: transform;
-        /* Prevent blurry video on some browsers */
-        -webkit-perspective: 1000;
-        perspective: 1000;
       }
 
       .rocket-icon {
@@ -637,7 +639,7 @@
                 playsinline
                 preload="auto"
               >
-                <source src="./assets/crsconclavevideo.mp4" type="video/mp4" />
+                <source src="./assets/crsconclave1.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
