@@ -323,6 +323,15 @@
         box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
       }
 
+      .cta-button-secondary {
+        background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+        box-shadow: 0 5px 20px rgba(168, 85, 247, 0.3);
+      }
+
+      .cta-button-secondary:hover {
+        box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+      }
+
       .hero-right {
         position: relative;
         display: flex;
@@ -535,6 +544,10 @@
           width: 100%;
           aspect-ratio: 16/9;
         }
+
+        .hero-buttons {
+          justify-content: center;
+        }
       }
 
       @media (max-width: 640px) {
@@ -570,7 +583,7 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
       <div class="nav-container">
-        <a href="#home" class="nav-logo">
+        <a href="index.html" class="nav-logo">
           <span>CRS Conclave 2.0</span>
           <span class="nav-logo-tagline"
             >Innovate. Collaborate. Transform.</span
@@ -579,7 +592,7 @@
 
         <ul class="nav-menu" id="nav-menu">
           <li class="nav-item">
-            <a href="#home" class="nav-link active">Home</a>
+            <a href="index.html" class="nav-link active">Home</a>
           </li>
           <li class="nav-item">
             <a href="about.html" class="nav-link">About</a>
@@ -623,6 +636,9 @@
           </h2>
 
           <div class="hero-buttons">
+            <a href="about.html" class="cta-button cta-button-secondary"
+              >About CRS Conclave</a
+            >
             <a href="register.html" class="cta-button">Register Now</a>
           </div>
         </div>
