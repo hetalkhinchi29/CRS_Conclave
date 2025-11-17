@@ -1146,9 +1146,9 @@
                   id="teacher_contact"
                   name="teacher_contact"
                   class="form-input"
-                  placeholder="+91 XXXXXXXXXX"
+                  placeholder="10-digit phone number"
                   aria-label="Teacher contact number"
-                  maxlength="14"
+                  maxlength="10"
                   required
                 />
                 <span class="error-message" id="teacher_contact_error"
@@ -1670,10 +1670,7 @@
       // Validate phone number
       function validatePhone(phone) {
         const cleanPhone = phone.replace(/\D/g, "");
-        const phoneWithoutCode = cleanPhone.startsWith("91")
-          ? cleanPhone.substring(2)
-          : cleanPhone;
-        return phoneWithoutCode.length === 10;
+        return cleanPhone.length === 10;
       }
 
       // Validate email
@@ -2040,28 +2037,19 @@
         }
       });
 
-      // Phone number formatting - allows exactly 10 digits
-      document
-        .getElementById("teacher_contact")
-        .addEventListener("input", function (e) {
-          // Get only digits
-          let value = e.target.value.replace(/\D/g, "");
+      // Phone number formatting - allows exactly 10 digits only
+      const teacherContactInput = document.getElementById("teacher_contact");
 
-          // Remove 91 if user typed it at start
-          if (value.startsWith("91") && value.length > 2) {
-            value = value.substring(2);
-          }
+      teacherContactInput.addEventListener("input", function (e) {
+        // Get only digits
+        let value = e.target.value.replace(/\D/g, "");
 
-          // Keep maximum 10 digits
-          value = value.substring(0, 10);
+        // Keep maximum 10 digits
+        value = value.substring(0, 10);
 
-          // Add +91 prefix
-          if (value.length > 0) {
-            e.target.value = "+91 " + value;
-          } else {
-            e.target.value = "";
-          }
-        });
+        // Set the value
+        e.target.value = value;
+      });
     </script>
   </body>
 </html>
